@@ -22,19 +22,19 @@ class UserSerializer(serializers.ModelSerializer):
 class TopicSerializer(serializers.ModelSerializer):
     class Meta:
         model = Topic
-        fields = ('name')
+        fields = ['name']
         
 class RoomSerializer(serializers.ModelSerializer):
     class Meta:
         model = Room
-        fields = ('id','name','description','created','updated','host','topic','participants')
+        fields = ['id','name','description','created','updated','host','topic','participants']
         
 class MessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Message
-        fields = ('id','user','room','body','created','updated')
+        fields = ['id','user','room','body','created','updated']
         
-class RoomSerializer(serializers.ModelSerializer):
+class JobSerializer(serializers.ModelSerializer):
     class Meta:
         model = Job
-        fields = ('id','name','company','location','created','updated','host','description','experience')
+        fields = ['id','name','company','location','created','updated','host','description','experience']
