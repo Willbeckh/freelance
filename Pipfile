@@ -16,6 +16,7 @@ django-filter = "*"
 whitenoise = "*"
 dj-database-url = "*"
 pyjwt = "*"
+django-cors-headers = "*"
 
 [dev-packages]
 
