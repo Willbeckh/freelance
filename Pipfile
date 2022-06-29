@@ -15,6 +15,7 @@ markdown = "*"
 django-filter = "*"
 whitenoise = "*"
 dj-database-url = "*"
+pyjwt = "*"
 
 [dev-packages]
 
