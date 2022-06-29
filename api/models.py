@@ -63,3 +63,17 @@ class Job(models.Model):
 
     def __str__(self):
         return self.name
+
+    AVAILABLE = 'available'
+    COMPLETE = 'complete'
+
+    STATUS = [
+        (AVAILABLE, 'available'),
+        (COMPLETE, 'complete'),
+    ]
+   # […]
+    status = models.CharField(
+        max_length=32,
+        choices=STATUS,
+        default=AVAILABLE,
+    )
