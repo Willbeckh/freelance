@@ -9,6 +9,12 @@ pillow = "*"
 python-decouple = "*"
 cloudinary = "*"
 django-restframework = "*"
+psycopg2 = "*"
+djangorestframework = "*"
+markdown = "*"
+django-filter = "*"
+whitenoise = "*"
+dj-database-url = "*"
 
 [dev-packages]
 
