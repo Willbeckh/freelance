@@ -10,6 +10,7 @@ router.register('topic',TopicViewSet)
 
 
 
+from .views import RegisterView, LoginView, UserView, LogoutView, RefreshView
 
 urlpatterns = [
     path('register/', RegisterView.as_view()),
@@ -19,3 +20,4 @@ urlpatterns = [
     path('refresh/',RefreshView.as_view()),
     path('',include(router.urls))
 ]
+
