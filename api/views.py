@@ -1,13 +1,10 @@
 from django.shortcuts import render
-from .serializers import UserSerializer,RoomSerializer,MessageSerializer,JobSerializer,TopicSerializer
+from .serializers import UserSerializer,RoomSerializer,MessageSerializer,JobSerializer,TopicSerializer,ProfileSerializer
 from rest_framework.views import APIView
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.authentication import get_authorization_header
 from rest_framework.response import Response
-from .models import User
-
-
-from .models import User,Room,Message,Job,Topic
+from .models import User,Room,Message,Job,Topic,Profile
 from .authentication import create_access_token, create_refresh_token, decode_access_token, decode_refresh_token
 from rest_framework import viewsets, permissions
 
@@ -91,6 +88,10 @@ class JobViewSet(viewsets.ModelViewSet):
 class TopicViewSet(viewsets.ModelViewSet):
     queryset = Topic.objects.all()
     serializer_class = TopicSerializer
+    
+class ProfileViewSet(viewsets.ModelViewSet):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
 
 
 
