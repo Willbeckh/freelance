@@ -1,12 +1,10 @@
-from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from api.models import Room, Job
-from api.serializers import RoomSerializer, JobSerializer
-from api import serializers
+from .serializers import RoomSerializer, JobSerializer
+from . import serializers
 
 
-# Create your views here.
 @api_view(['GET'])
 def getRoutes(request):
     routes = [
