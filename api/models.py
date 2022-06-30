@@ -15,7 +15,7 @@ class User(AbstractUser):
     
     
     def __str__(self):
-        return f'{self.username}'
+        return f'{self.name}'
 
 
 class Topic(models.Model):
