@@ -1,4 +1,5 @@
-from django.urls import re_path,path,include
+
+from django.urls import path, include
 from .views import RegisterView,LoginView,UserView,LogoutView,RefreshView,MessageViewSet,RoomViewSet,JobViewSet,TopicViewSet
 from rest_framework import routers
 
@@ -9,8 +10,6 @@ router.register('jobs',JobViewSet)
 router.register('topic',TopicViewSet)
 
 
-
-from .views import RegisterView, LoginView, UserView, LogoutView, RefreshView
 
 urlpatterns = [
     path('register/', RegisterView.as_view()),
