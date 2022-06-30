@@ -13,6 +13,11 @@ class User(AbstractUser):
     USERNAME = 'username'
     REQUIRED_FIELDS = []
 
+    
+    
+    def __str__(self):
+        return f'{self.username}'
+
 
 class Topic(models.Model):
     name = models.CharField(max_length=200)
@@ -77,6 +82,7 @@ class Job(models.Model):
         max_length=32,
         choices=STATUS,
         default=AVAILABLE,
+
     )
 
 
@@ -89,3 +95,5 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.user
+
+#     )
