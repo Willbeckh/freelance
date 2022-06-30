@@ -46,10 +46,6 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'freelance.urls'
 
-<<<<<<< HEAD
-=======
-
->>>>>>> e70c3e4ced59f551765d67f6bfaad0f3d15bea86
 
 TEMPLATES = [
     {
@@ -75,12 +71,8 @@ WSGI_APPLICATION = 'freelance.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': config('DB_NAME'),
-        'USER': config('DB_USER'),
-        'PASSWORD':config('DB_PASSWORD'),
-        'HOST': config('DB_HOST'),
-        'PORT': '',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'mydatabase',
     }
 }
 
