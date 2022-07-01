@@ -1,6 +1,6 @@
 
 from django.urls import path, include
-from .views import RegisterView,LoginView,UserView,LogoutView,RefreshView,MessageViewSet,RoomViewSet,JobViewSet,TopicViewSet
+from .views import RegisterView,LoginView,UserView,LogoutView,RefreshView,MessageViewSet,RoomViewSet,JobViewSet,TopicViewSet,ProfileViewSet
 from rest_framework import routers
 
 router = routers.DefaultRouter()
@@ -8,6 +8,7 @@ router.register('messages',MessageViewSet)
 router.register('rooms',RoomViewSet)
 router.register('jobs',JobViewSet)
 router.register('topic',TopicViewSet)
+router.register('profile',ProfileViewSet)
 
 
 

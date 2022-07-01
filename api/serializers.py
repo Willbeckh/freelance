@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User,Topic,Room,Job,Message
+from .models import User,Topic,Room,Job,Message,Profile
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -39,4 +39,9 @@ class JobSerializer(serializers.ModelSerializer):
     class Meta:
         model = Job
         fields = ['id','name','company','location','created','updated','host','description','experience']
+        
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = ['id','avatar','email','bio','user']
 
