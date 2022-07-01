@@ -7,8 +7,8 @@ from rest_framework import viewsets, permissions
 
 
 # local imports
-from .models import User, Room, Message, Job, Topic
-from .serializers import UserSerializer, RoomSerializer, MessageSerializer, JobSerializer, TopicSerializer
+from .models import User, Room, Message, Job, Topic, Profile
+from .serializers import UserSerializer, RoomSerializer, MessageSerializer, JobSerializer, TopicSerializer, ProfileSerializer
 from .authentication import create_access_token, create_refresh_token, decode_access_token, decode_refresh_token
 
 
@@ -93,6 +93,11 @@ class JobViewSet(viewsets.ModelViewSet):
 class TopicViewSet(viewsets.ModelViewSet):
     queryset = Topic.objects.all()
     serializer_class = TopicSerializer
+
+
+class ProfileViewSet(viewsets.ModelViewSet):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
 
 
 class RefreshView(APIView):
