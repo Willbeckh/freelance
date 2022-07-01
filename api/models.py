@@ -10,8 +10,9 @@ class User(AbstractUser):
 
     avatar = models.ImageField(null=True, default="avatar.svg")
 
-    USERNAME_FIELD = 'email'
+    USERNAME = 'username'
     REQUIRED_FIELDS = []
+
     
     
     def __str__(self):
@@ -81,4 +82,18 @@ class Job(models.Model):
         max_length=32,
         choices=STATUS,
         default=AVAILABLE,
+
     )
+
+
+class Profile(models.Model):
+    avatar = models.ImageField(null=True, default="avatar.svg")
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    email = models.EmailField(unique=True, null=True)
+    bio = models.TextField(null=True)
+    USERNAME_FIELD = 'email'
+
+    def __str__(self):
+        return self.user
+
+#     )

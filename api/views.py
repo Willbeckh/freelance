@@ -4,10 +4,11 @@ from rest_framework.views import APIView
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.authentication import get_authorization_header
 from rest_framework.response import Response
+from .models import User
+
 
 from .models import User,Room,Message,Job,Topic
-from rest_framework import viewsets
-from .authentication import create_access_token,create_refresh_token,decode_access_token,decode_refresh_token
+from .authentication import create_access_token, create_refresh_token, decode_access_token, decode_refresh_token
 from rest_framework import viewsets, permissions
 
 
@@ -73,6 +74,7 @@ class UserView(APIView):
         raise(AuthenticationFailed('Unauthenticated!'))
 
 
+
 class MessageViewSet(viewsets.ModelViewSet):
     queryset = Message.objects.all()
     serializer_class = MessageSerializer
@@ -89,6 +91,7 @@ class JobViewSet(viewsets.ModelViewSet):
 class TopicViewSet(viewsets.ModelViewSet):
     queryset = Topic.objects.all()
     serializer_class = TopicSerializer
+
 
 
 class RefreshView(APIView):
