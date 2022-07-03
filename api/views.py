@@ -9,6 +9,8 @@ from .authentication import create_access_token, create_refresh_token, decode_ac
 from rest_framework import viewsets, permissions
 
 
+
+
 # Create your views here.
 class UserViewSet(viewsets.ModelViewSet):
     """
@@ -81,8 +83,17 @@ class RoomViewSet(viewsets.ModelViewSet):
     serializer_class = RoomSerializer
     
 class JobViewSet(viewsets.ModelViewSet):
-    queryset = Job.objects.all()
     serializer_class = JobSerializer
+    
+    def get_queryset(self):
+        jobs = Job.objects.all()
+        return jobs
+    
+    def retrieve(self, request, *args, **kwargs):
+        params = kwargs
+        jobs = Job.objects.filter(name= params['pk'])
+        serializer = JobSerializer(jobs, many=True)
+        return Response(serializer.data)
 
 
 class TopicViewSet(viewsets.ModelViewSet):
@@ -92,7 +103,8 @@ class TopicViewSet(viewsets.ModelViewSet):
 class ProfileViewSet(viewsets.ModelViewSet):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
-
+        
+        
 
 
 class RefreshView(APIView):
