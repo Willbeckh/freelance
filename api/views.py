@@ -4,6 +4,7 @@ from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.authentication import get_authorization_header
 from rest_framework.response import Response
 from rest_framework import viewsets, permissions
+from rest_framework_swagger.views import get_swagger_view
 
 
 # local imports
@@ -20,6 +21,10 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     # permission_classes = [permissions.IsAuthenticated]
+
+    # method to get current authenticated user.
+    def get_queryset(self):
+        return super().get_queryset().filter(id=self.request.user.id)
 
 
 class RegisterView(APIView):
@@ -99,6 +104,11 @@ class ProfileViewSet(viewsets.ModelViewSet):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
 
+    # get profile
+    def get_queryset(self):
+        """gets the profile for current user."""
+        return Profile.objects.filter(user=self.request.user.id)
+
 
 class RefreshView(APIView):
     def post(self, request):
@@ -122,3 +132,7 @@ class LogoutView(APIView):
             'message': 'success'
         }
         return response
+
+
+# swagger api
+schema_view = get_swagger_view(title="Freelance API")
