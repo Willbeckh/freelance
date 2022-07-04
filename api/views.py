@@ -90,9 +90,17 @@ class RoomViewSet(viewsets.ModelViewSet):
 
 
 class JobViewSet(viewsets.ModelViewSet):
-    queryset = Job.objects.all()
     serializer_class = JobSerializer
-    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        jobs = Job.objects.all()
+        return jobs
+
+    def retrieve(self, request, *args, **kwargs):
+        params = kwargs
+        jobs = Job.objects.filter(name=params['pk'])
+        serializer = JobSerializer(jobs, many=True)
+        return Response(serializer.data)
 
 
 class TopicViewSet(viewsets.ModelViewSet):
