@@ -27,7 +27,7 @@ class TopicSerializer(serializers.ModelSerializer):
 
 
 class RoomSerializer(serializers.ModelSerializer):
-    class Meta:
+    class Meta: 
         model = Room
         fields = ['id', 'name', 'description', 'created',
                   'updated', 'host', 'topic', 'participants']
