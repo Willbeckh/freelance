@@ -61,7 +61,7 @@ STATUS = (
     ('In Progress', 'in progress'),
     ('Canceled', 'canceled'),
     ('Done', 'done'),
-    ('Premium', 'premmium')
+    ('Premium', 'premium')
 )
 
 
@@ -86,9 +86,20 @@ class Profile(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     email = models.EmailField(unique=True, null=True)
     bio = models.TextField(null=True)
+
     USERNAME_FIELD = 'email'
 
     def __str__(self):
         return self.user
 
 
+# Job tracking pipeline.
+class JobPipeline(models.Model):
+    
+    author = models.ForeignKey(Job, on_delete=models.CASCADE, related_name='author')
+    job_title = models.ForeignKey(Job, on_delete=models.CASCADE, related_name='job_title')
+    applicants = models.ManyToManyField(User, related_name='applicants')
+    job_status = models.OneToOneField(Job, on_delete=models.CASCADE, related_name='job_status')
+
+    def __str__(self):
+        return str(self.job_title)
