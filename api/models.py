@@ -68,7 +68,7 @@ STATUS = (
 class Job(models.Model):
     name = models.CharField(max_length=200)
     company = models.CharField(max_length=200)
-    location = models.TextField(null=True, blank=True)
+    location = models.CharField(max_length=80,null=True, blank=True)
     host = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     description = models.TextField(null=True, blank=True)
     experience = models.TextField(null=True, blank=True)
@@ -96,10 +96,9 @@ class Profile(models.Model):
 # Job tracking pipeline.
 class JobPipeline(models.Model):
     
-    author = models.ForeignKey(Job, on_delete=models.CASCADE, related_name='author')
-    job_title = models.ForeignKey(Job, on_delete=models.CASCADE, related_name='job_title')
+    job_details = models.ForeignKey(Job, on_delete=models.CASCADE, null=True) 
     applicants = models.ManyToManyField(User, related_name='applicants')
-    job_status = models.OneToOneField(Job, on_delete=models.CASCADE, related_name='job_status')
+    date_added = models.DateTimeField(auto_now_add=True, null=True)
 
     def __str__(self):
-        return str(self.job_title)
+        return str(self.job_details.name)
