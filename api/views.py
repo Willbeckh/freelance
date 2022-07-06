@@ -6,10 +6,14 @@ from rest_framework.views import APIView
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.authentication import get_authorization_header
 from rest_framework.response import Response
-from .models import User,Room,Message,Job,Topic,Profile
-from .authentication import create_access_token, create_refresh_token, decode_access_token, decode_refresh_token
 from rest_framework import viewsets, permissions
 
+
+
+# local imports
+from .models import User, Room, Message, Job, Topic, Profile
+from .serializers import UserSerializer, RoomSerializer, MessageSerializer, JobSerializer, TopicSerializer, ProfileSerializer
+from .authentication import create_access_token, create_refresh_token, decode_access_token, decode_refresh_token
 
 
 
@@ -81,17 +85,19 @@ class UserView(APIView):
         return Response(serializer.data)
 
 
-
 class MessageViewSet(viewsets.ModelViewSet):
     queryset = Message.objects.all()
     serializer_class = MessageSerializer
-    
+
+
 class RoomViewSet(viewsets.ModelViewSet):
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
-    
+
+
 class JobViewSet(viewsets.ModelViewSet):
     serializer_class = JobSerializer
+
     
     def get_queryset(self):
         jobs = Job.objects.all()
@@ -107,13 +113,13 @@ class JobViewSet(viewsets.ModelViewSet):
 class TopicViewSet(viewsets.ModelViewSet):
     queryset = Topic.objects.all()
     serializer_class = TopicSerializer
-    
+
+
 class ProfileViewSet(viewsets.ModelViewSet):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
         
         
-
 
 class RefreshView(APIView):
     def post(self, request):

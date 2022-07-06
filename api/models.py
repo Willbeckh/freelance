@@ -11,10 +11,8 @@ class User(AbstractUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
-    
-    
     def __str__(self):
-        return f'{self.username}'
+        return f'{self.name}'
 
 
 class Topic(models.Model):
@@ -55,6 +53,16 @@ class Message(models.Model):
         return self.body[0:50]
 
 
+# project tracking status
+STATUS = (
+    ('Available', 'available'),
+    ('In Progress', 'in progress'),
+    ('Canceled', 'canceled'),
+    ('Done', 'done'),
+    ('Premium', 'premmium')
+)
+
+
 class Job(models.Model):
     name = models.CharField(max_length=200)
     company = models.CharField(max_length=200)
@@ -64,24 +72,11 @@ class Job(models.Model):
     experience = models.TextField(null=True, blank=True)
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(
+        max_length=50, choices=STATUS, default='available')
 
     def __str__(self):
         return self.name
-
-    AVAILABLE = 'available'
-    COMPLETE = 'complete'
-
-    STATUS = [
-        (AVAILABLE, 'available'),
-        (COMPLETE, 'complete'),
-    ]
-   # […]
-    status = models.CharField(
-        max_length=32,
-        choices=STATUS,
-        default=AVAILABLE,
-
-    )
 
 
 class Profile(models.Model):
@@ -94,4 +89,4 @@ class Profile(models.Model):
     def __str__(self):
         return self.user
 
-#     )
+
