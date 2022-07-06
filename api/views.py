@@ -109,6 +109,7 @@ class TopicViewSet(viewsets.ModelViewSet):
 
 
 class ProfileViewSet(viewsets.ModelViewSet):
+    """This class creates the endpoint to view all availlable jobs"""
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
 
