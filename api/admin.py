@@ -15,10 +15,8 @@ admin.site.register(Profile)
 # registers job pipeline to admin
 class PipelineAdmin(admin.ModelAdmin):
     fieldsets = [
-        (None, {'fields': ['author']}),
-        ('Title', {'fields': ['job_title']}),
-        ('Status', {'fields': ['job_status']}),
-        ('Applicants', {'fields': ['applicants']}),
+        (None, {'fields': ['job_details']}),
+        ('Applicants', {'fields': ['applicants']})
     ]
 
 
