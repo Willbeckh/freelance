@@ -1,88 +1,41 @@
-import datetime
-from django.shortcuts import render
-import jwt
-from .serializers import UserSerializer,RoomSerializer,MessageSerializer,JobSerializer,TopicSerializer,ProfileSerializer
+from .serializers import UserSerializer,RoomSerializer,MessageSerializer,JobSerializer,TopicSerializer,ProfileSerializer,AuthTokenSerializer
 from rest_framework.views import APIView
-from rest_framework.exceptions import AuthenticationFailed
-from rest_framework.authentication import get_authorization_header
 from rest_framework.response import Response
-from rest_framework import viewsets, permissions
+from rest_framework import viewsets
+from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.authtoken.models import Token
 
 
 
 # local imports
 from .models import User, Room, Message, Job, Topic, Profile
 from .serializers import UserSerializer, RoomSerializer, MessageSerializer, JobSerializer, TopicSerializer, ProfileSerializer
-from .authentication import create_access_token, create_refresh_token, decode_access_token, decode_refresh_token
+from rest_framework import generics
 
 
-
-# Create your views here.
-class UserViewSet(viewsets.ModelViewSet):
-    """
-    this class generates the endpoint for viewing users
-    """
-    queryset = User.objects.all()
+class CreateUserView(generics.CreateAPIView):
     serializer_class = UserSerializer
-    # permission_classes = [permissions.IsAuthenticated]
+    
 
 
-class RegisterView(APIView):
-    """this class consumes the register serializer and generates the endpoint to register a user"""
-
-    def post(self, request):
-        serializer = UserSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data)
-
-
-class LoginView(APIView):
+class LoginView(ObtainAuthToken):
     """this class consumes the login serializer and generates the endpoint to login a user"""
+    serializer_class = AuthTokenSerializer
 
-    def post(self, request):
-        email = request.data['email']
-        password = request.data['password']
-        user = User.objects.filter(email=email).first()
-        
-        if user is None:
-            raise(AuthenticationFailed('User not found'))
-
-        if not user.check_password(password):
-            raise(AuthenticationFailed('Incorrect Password'))
-
-        payload = {
-            'id':user.id,
-            'exp':datetime.datetime.utcnow() + datetime.timedelta(minutes=60),
-            'iat':datetime.datetime.utcnow()
-        }
-        token = jwt.encode(payload,'secret',algorithm='HS256')
-        response = Response()
-        response.set_cookie(key='jwt',value=token,httponly=True)
-        response.data = {
-            'jwt':token
-        }
-        return response
+    def post(self, request,*args,**kwargs):
+        serializers = self.serializer_class(data=request.data,context={'request':request})
+        serializers.is_valid(raise_exception=True)
+        user = serializers.validated_data['user']
+        token,created = Token.objects.get_or_create(user=user)
+        return Response({
+            'token':token.key,
+            'username':user.username,
+            'user_id':user.id,
+            'email':user.email,
+            'name':user.name
+        })
 
 
-class UserView(APIView):
-    """this class consumes the user serializer and generates the endpoint to get the user details"""
-
-    def get(self, request):
-        token = request.COOKIES.get('jwt')
-        
-        if not token:
-            raise(AuthenticationFailed('Unauthenticated!'))
-        
-        try:
-            payload = jwt.decode(token,'secret',algorithms=['HS256'])
-            
-        except jwt.ExpiredSignatureError:
-            raise AuthenticationFailed('Unauthenticated')
-        
-        user = User.objects.filter(id=payload['id']).first()
-        serializer = UserSerializer(user)
-        return Response(serializer.data)
 
 
 class MessageViewSet(viewsets.ModelViewSet):
@@ -121,25 +74,4 @@ class ProfileViewSet(viewsets.ModelViewSet):
         
         
 
-class RefreshView(APIView):
-    def post(self, request):
-        refresh_token = request.COOKIES.get('refreshToken')
-        id = decode_refresh_token(refresh_token)
-        access_token = create_access_token(id)
-        return Response({
-            'token': access_token
-        })
 
-
-class LogoutView(APIView):
-    """
-    This class sends a logout request to the server for the current authenticated user
-    """
-
-    def post(self, request):
-        response = Response()
-        response.delete_cookie(key='refreshToken')
-        response.data = {
-            'message': 'success'
-        }
-        return response

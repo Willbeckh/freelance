@@ -27,10 +27,10 @@ INSTALLED_APPS = [
 
     # third party
     'rest_framework',
+    'rest_framework.authtoken',
     'corsheaders',
 ]
 
-AUTH_USER_MODEL = 'api.User'
 
 MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -72,10 +72,10 @@ WSGI_APPLICATION = 'freelance.wsgi.application'
 DATABASES = {
     'default': {
            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-           'NAME': config('DB_NAME'),
-           'USER': config('DB_USER'),
-           'PASSWORD': config('DB_PASSWORD'),
-           'HOST': config('DB_HOST'),
+           'NAME': 'angular',
+           'USER': 'paulineapondi',
+           'PASSWORD': '1989',
+           'HOST': '127.0.0.1',
            'PORT': '',
        }
 }
