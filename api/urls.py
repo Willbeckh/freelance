@@ -29,6 +29,6 @@ urlpatterns = [
     path('signup/',CreateUserView.as_view()),
     path('login/',LoginView.as_view(),name='login'),
     path('job/<int:pk>/',JobView.as_view({'get':'retrieve'}),name='job'),
-    path('api/',include(router.urls)),
-    path('', schema_view.with_ui('swagger', cache_timeout=0), name='schema-schema'),
+    path('',include(router.urls)),
+    path('docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-schema'),
 ]
