@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUser
 from django.utils.translation import gettext as _
-from .models import User, Job, Room, Message, Topic, Profile
+from .models import User, Job, Room, Message, Topic, Profile, JobPipeline
 # Register your models here.
 
 
@@ -29,3 +29,13 @@ admin.site.register(Room)
 admin.site.register(Topic)
 admin.site.register(Profile)
 
+
+# registers job pipeline to admin
+class PipelineAdmin(admin.ModelAdmin):
+    fieldsets = [
+        (None, {'fields': ['job_details']}),
+        ('Applicants', {'fields': ['applicants']})
+    ]
+
+
+admin.site.register(JobPipeline, PipelineAdmin)

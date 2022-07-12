@@ -17,6 +17,7 @@ whitenoise = "*"
 dj-database-url = "*"
 pyjwt = "*"
 django-cors-headers = "*"
+django-rest-swagger = "*"
 
 [dev-packages]
 

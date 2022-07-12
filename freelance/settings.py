@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
+    'rest_framework_swagger',
 ]
 
 
@@ -71,13 +72,13 @@ WSGI_APPLICATION = 'freelance.wsgi.application'
 
 DATABASES = {
     'default': {
-           'ENGINE': 'django.db.backends.postgresql_psycopg2',
-           'NAME': 'angular',
-           'USER': 'paulineapondi',
-           'PASSWORD': '1989',
-           'HOST': '127.0.0.1',
-           'PORT': '',
-       }
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        'PASSWORD':config('DB_PASSWORD'),
+        'HOST': config('DB_HOST'),
+        'PORT': '',
+    }
 }
 
 # Password validation

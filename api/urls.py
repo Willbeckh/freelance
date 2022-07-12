@@ -4,12 +4,11 @@ from .views import  LoginView, MessageViewSet, RoomViewSet, JobViewSet, TopicVie
 from rest_framework import routers
 
 router = routers.DefaultRouter()
-router.register('messages',MessageViewSet)
-router.register('rooms',RoomViewSet)
-router.register('jobs',JobViewSet, basename='jobs')
-router.register('topic',TopicViewSet)
-router.register('profile',ProfileViewSet)
-
+router.register('messages', MessageViewSet)
+router.register('rooms', RoomViewSet)
+router.register('jobs', JobViewSet, basename='jobs')
+router.register('topic', TopicViewSet)
+router.register('profile', ProfileViewSet)
 
 
 urlpatterns = [

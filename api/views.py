@@ -1,7 +1,7 @@
 from .serializers import UserSerializer,RoomSerializer,MessageSerializer,JobSerializer,TopicSerializer,ProfileSerializer,AuthTokenSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import viewsets
+from rest_framework import viewsets, permissions
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 
@@ -14,8 +14,15 @@ from rest_framework import generics
 
 
 class CreateUserView(generics.CreateAPIView):
+    """
+    this class generates the endpoint for viewing users
+    """
     serializer_class = UserSerializer
     
+
+    # method to get current authenticated user.
+    def get_queryset(self):
+        return super().get_queryset().filter(id=self.request.user.id)
 
 
 class LoginView(ObtainAuthToken):
@@ -51,14 +58,13 @@ class RoomViewSet(viewsets.ModelViewSet):
 class JobViewSet(viewsets.ModelViewSet):
     serializer_class = JobSerializer
 
-    
     def get_queryset(self):
         jobs = Job.objects.all()
         return jobs
-    
+
     def retrieve(self, request, *args, **kwargs):
         params = kwargs
-        jobs = Job.objects.filter(name= params['pk'])
+        jobs = Job.objects.filter(name=params['pk'])
         serializer = JobSerializer(jobs, many=True)
         return Response(serializer.data)
 
@@ -69,9 +75,23 @@ class TopicViewSet(viewsets.ModelViewSet):
 
 
 class ProfileViewSet(viewsets.ModelViewSet):
+    """This class creates the endpoint to view all availlable jobs"""
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
-        
-        
+
+    # get profile
+    def get_queryset(self):
+        """gets the profile for current user."""
+        return Profile.objects.filter(user=self.request.user.id)
+
+
+    def post(self, request):
+        response = Response()
+        response.delete_cookie(key='refreshToken')
+        response.data = {
+            'message': 'success'
+        }
+        return response
+
 
 

@@ -88,14 +88,14 @@ STATUS = (
     ('In Progress', 'in progress'),
     ('Canceled', 'canceled'),
     ('Done', 'done'),
-    ('Premium', 'premmium')
+    ('Premium', 'premium')
 )
 
 
 class Job(models.Model):
     name = models.CharField(max_length=200)
     company = models.CharField(max_length=200)
-    location = models.TextField(null=True, blank=True)
+    location = models.CharField(max_length=80,null=True, blank=True)
     host = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     description = models.TextField(null=True, blank=True)
     experience = models.TextField(null=True, blank=True)
@@ -113,9 +113,19 @@ class Profile(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     email = models.EmailField(unique=True, null=True)
     bio = models.TextField(null=True)
+
     USERNAME_FIELD = 'email'
 
     def __str__(self):
         return self.user
 
 
+# Job tracking pipeline.
+class JobPipeline(models.Model):
+    
+    job_details = models.ForeignKey(Job, on_delete=models.CASCADE, null=True) 
+    applicants = models.ManyToManyField(User, related_name='applicants')
+    date_added = models.DateTimeField(auto_now_add=True, null=True)
+
+    def __str__(self):
+        return str(self.job_details.name)
