@@ -27,11 +27,11 @@ INSTALLED_APPS = [
 
     # third party
     'rest_framework',
+    'rest_framework.authtoken',
     'corsheaders',
     'rest_framework_swagger',
 ]
 
-AUTH_USER_MODEL = 'api.User'
 
 MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
