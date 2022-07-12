@@ -19,6 +19,7 @@ pyjwt = "*"
 django-cors-headers = "*"
 django-rest-swagger = "*"
 psycopg2-binary = "*"
+drf-yasg = "*"
 
 [dev-packages]
 
