@@ -42,7 +42,7 @@ class User(AbstractBaseUser,PermissionsMixin):
     REQUIRED_FIELDS = []
 
     def __str__(self):
-        return f'{self.name}'
+        return str(self.name or self.username)
 
 class Topic(models.Model):
     name = models.CharField(max_length=200)
@@ -117,7 +117,7 @@ class Profile(models.Model):
     USERNAME_FIELD = 'email'
 
     def __str__(self):
-        return self.user
+        return self.user.username or self.email[:20]
 
 
 # Job tracking pipeline.
