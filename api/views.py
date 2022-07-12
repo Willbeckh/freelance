@@ -4,13 +4,14 @@ from rest_framework.response import Response
 from rest_framework import viewsets, permissions
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
+from rest_framework import generics
+from django.shortcuts import render, get_object_or_404
 
 
 
 # local imports
 from .models import User, Room, Message, Job, Topic, Profile
 from .serializers import UserSerializer, RoomSerializer, MessageSerializer, JobSerializer, TopicSerializer, ProfileSerializer
-from rest_framework import generics
 
 
 class CreateUserView(generics.CreateAPIView):
@@ -95,3 +96,12 @@ class ProfileViewSet(viewsets.ModelViewSet):
 
 
 
+class JobView(viewsets.ModelViewSet):
+    """This class creates the endpoint to view a single job"""
+    queryset = Job.objects.all()
+    serializer_class = JobSerializer
+    
+    def get(self, pk=None):
+        job = get_object_or_404(self.queryset, id=pk)
+        serializer = JobSerializer(job, many=False)
+        return Response(serializer.data, content_type='application/json')
