@@ -18,6 +18,7 @@ dj-database-url = "*"
 pyjwt = "*"
 django-cors-headers = "*"
 django-rest-swagger = "*"
+psycopg2-binary = "*"
 
 [dev-packages]
 
