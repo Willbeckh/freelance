@@ -5,7 +5,8 @@ from rest_framework import viewsets, permissions
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework import generics
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import get_object_or_404
+from rest_framework.permissions import IsAuthenticated
 
 
 
@@ -58,6 +59,7 @@ class RoomViewSet(viewsets.ModelViewSet):
 
 class JobViewSet(viewsets.ModelViewSet):
     serializer_class = JobSerializer
+    # permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         jobs = Job.objects.all()
