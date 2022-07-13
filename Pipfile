@@ -9,7 +9,6 @@ pillow = "*"
 python-decouple = "*"
 cloudinary = "*"
 django-restframework = "*"
-psycopg2 = "*"
 djangorestframework = "*"
 markdown = "*"
 django-filter = "*"
@@ -20,6 +19,9 @@ django-cors-headers = "*"
 django-rest-swagger = "*"
 psycopg2-binary = "*"
 drf-yasg = "*"
+wheel = "*"
+django-heroku = "*"
+djangorestframework-simplejwt = "*"
 
 [dev-packages]
 
