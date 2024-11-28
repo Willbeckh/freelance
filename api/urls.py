@@ -31,5 +31,5 @@ urlpatterns = [
     path('login/',LoginView.as_view(),name='login'),
     path('job/<int:pk>/',JobView.as_view({'get':'retrieve'}),name='job'),
     path('',include(router.urls)),
-    path('docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-schema'),
+    path('docs/v1/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-schema'),
 ]
