@@ -22,8 +22,9 @@ drf-yasg = "*"
 wheel = "*"
 django-heroku = "*"
 djangorestframework-simplejwt = "*"
+gunicorn = "*"
 
 [dev-packages]
 
 [requires]
-python_version = "3.8"
+python_version = "*"
